@@ -1,0 +1,8 @@
+
+.eggs/
+
+.idea/
+
+oarepo_nusl_rules.egg-info/
+
+oarepo_nusl_rules/__pycache__/
