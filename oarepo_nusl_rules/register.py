@@ -25,11 +25,11 @@ class RuleRegistry(object):
 
     def register(self, func):
         self.rules[func.__name__] = func
-        print(RuleRegistry.instance.rules)
+        print(RuleRegistry.instance.rules, RuleRegistry.instance)
 
 
 RuleRegistry()
 
 if __name__ == "__main__":
     RuleRegistry.instance.load()
-    print(RuleRegistry.instance.rules)
+    print(RuleRegistry.instance.rules, RuleRegistry.instance)
