@@ -1,3 +1,7 @@
+"""
+Docs
+"""
+
 import pkg_resources
 
 
@@ -35,3 +39,6 @@ class RuleRegistry(object):
 
     def register(self, func):
         self.rules[func.__name__] = func
+
+
+rule_registry = RuleRegistry.Instance()
