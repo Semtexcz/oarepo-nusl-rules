@@ -38,6 +38,7 @@ class RuleRegistry(object):
         if not self.loaded:
             for entry_point in pkg_resources.iter_entry_points(self.entry_point_group):
                 entry_point.load()
+        self.loaded = True
 
     def register(self, func):
         self.rules[func.__name__] = func
