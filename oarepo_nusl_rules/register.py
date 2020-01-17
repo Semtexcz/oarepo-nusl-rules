@@ -4,6 +4,8 @@ Docs
 
 import pkg_resources
 
+ENTRY_POINT_GROUP = "oarepo_nusl_rules.rules"
+
 
 class Singleton:
 
@@ -27,14 +29,14 @@ class Singleton:
 @Singleton
 class RuleRegistry(object):
 
-    def __init__(self, entry_point_group="oarepo_nusl_rules.rules"):
+    def __init__(self):
         self.loaded = False
         self.rules = {}
-        self.entry_point_group = entry_point_group
+        self.entry_point_group = ENTRY_POINT_GROUP
 
     def load(self):
         if not self.loaded:
-            for entry_point in pkg_resources.iter_entry_points("oarepo_nusl_rules.rules"):
+            for entry_point in pkg_resources.iter_entry_points(self.entry_point_group):
                 entry_point.load()
 
     def register(self, func):
