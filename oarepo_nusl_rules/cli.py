@@ -22,8 +22,8 @@ def rules():
     rule_registry.load()
     rules_ = rule_registry.rules
     for k, v in rules_.items():
-        code = k
-        description = v.__doc__
+        code = k.strip()
+        description = v.__doc__.strip()
         existed_rule = OAIRule.query.filter_by(code=code).one_or_none()
         if existed_rule is None:
             rule = OAIRule(code=code, description=description)
