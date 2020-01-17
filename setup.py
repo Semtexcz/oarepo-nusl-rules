@@ -18,7 +18,8 @@ setup_requires = [
 install_requires = [
     'flask-taxonomies',
     'pycountry',
-    'langdetect'
+    'langdetect',
+    'click'
 ]
 
 packages = find_packages()
@@ -28,7 +29,6 @@ g = {}
 with open(os.path.join('oarepo_nusl_rules', 'version.py'), 'rt') as fp:
     exec(fp.read(), g)
     version = g['__version__']
-
 
 setup(
     name='oarepo-nusl-rules',
@@ -48,6 +48,9 @@ setup(
         'oarepo_nusl_rules.rules': [
             'xoai = oarepo_nusl_rules.xoai.rules',
         ],
+        'flask.commands': [
+            'oai = oarepo_nusl_rules.cli:oai',
+        ]
     },
     install_requires=install_requires,
     setup_requires=setup_requires,
