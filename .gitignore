@@ -6,3 +6,5 @@
 oarepo_nusl_rules.egg-info/
 
 oarepo_nusl_rules/__pycache__/
+
+oarepo_nusl_rules/xoai/__pycache__/
