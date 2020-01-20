@@ -47,9 +47,6 @@ setup(
     entry_points={
         'oarepo_nusl_rules.rules': [
             'xoai = oarepo_nusl_rules.xoai.rules',
-        ],
-        'flask.commands': [
-            'oai = oarepo_nusl_rules.cli:oai',
         ]
     },
     install_requires=install_requires,
