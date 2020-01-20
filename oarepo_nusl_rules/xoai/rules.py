@@ -11,7 +11,7 @@ from oarepo_nusl_rules.utils import get_iso_lang_code, extract_title
 # TODO: source by měl být celý json
 
 @rule
-def abstract(source, *args, **kwargs):
+def xoai_abstract(source, *args, **kwargs):
     """
     CZ:
     EN:
@@ -41,7 +41,7 @@ def abstract(source, *args, **kwargs):
 
 
 @rule
-def contributor(source, *args, **kwargs):
+def xoai_contributor(source, *args, **kwargs):
     """
     CZ:
     EN:
@@ -61,7 +61,7 @@ def contributor(source, *args, **kwargs):
 
 
 @rule
-def creator(source, *args, **kwargs):
+def xoai_creator(source, *args, **kwargs):
     """
     CZ:
     EN:
@@ -76,7 +76,7 @@ def creator(source, *args, **kwargs):
 
 
 @rule
-def date_accepted(source, *args, **kwargs):
+def xoai_date_accepted(source, *args, **kwargs):
     """
     CZ:
     EN:
@@ -89,7 +89,7 @@ def date_accepted(source, *args, **kwargs):
 
 
 @rule
-def defended(source, *args, **kwargs):
+def xoai_defended(source, *args, **kwargs):
     """
     CZ:
     EN:
@@ -145,7 +145,7 @@ def defended(source, *args, **kwargs):
 
 
 @rule
-def identifier(source, *args, **kwargs):
+def xoai_identifier(source, *args, **kwargs):
     return {
         "identifier": [
             {
@@ -200,7 +200,7 @@ def identifier(source, *args, **kwargs):
 
 
 @rule
-def language(source, *args, **kwargs):
+def xoai_language(source, *args, **kwargs):
     langs = []
     for lang in source["none"]:
         code = get_iso_lang_code(lang[:2])
@@ -212,7 +212,7 @@ def language(source, *args, **kwargs):
 
 
 @rule
-def modified(source, *args, **kwargs):
+def xoai_modified(source, *args, **kwargs):
     date_time_list = source.split(" ")
     date = date_time_list[0]
     time = date_time_list[1][:8]
@@ -231,7 +231,7 @@ def modified(source, *args, **kwargs):
 
 
 @rule
-def title(source, *args, **kwargs):
+def xoai_title(source, *args, **kwargs):
     titles = []
     extract_title(source, titles)
     if "translated" in source:
