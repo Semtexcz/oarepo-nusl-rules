@@ -17,23 +17,21 @@ def xoai_abstract(source, *args, **kwargs):
     EN:
     """
     value = []
-    if source.get("en") is not None:
-        abstract_list = source["en"].get("en_US")
-        if abstract_list is not None and len(abstract_list) != 0:
+    for lang_vers in source:
+        lang = lang_vers["@name"]
+        field = lang_vers["element"]["field"]
+        if isinstance(field, list):
+            for abstract in field:
+                value.append(
+                    {
+                        "name": abstract["#text"],
+                        "lang": lang
+                    }
+                )
+        else:
             value.append(
                 {
-                    "name": abstract_list[0],
-                    "lang": "eng"
-                }
-            )
-    if source.get("cs") is not None:
-        abstract_list = source["cs"].get("cs_CZ")
-        if abstract_list is not None and len(abstract_list) != 0:
-            lang = detect(abstract_list[0])
-            lang = get_iso_lang_code(lang)
-            value.append(
-                {
-                    "name": abstract_list[0],
+                    "name": field["#text"],
                     "lang": lang
                 }
             )
