@@ -99,11 +99,10 @@ def xoai_date_accepted(source, *args, **kwargs):
     CZ:
     EN:
     """
-    date = source.get("none")
-    if date is None or len(date) == 0:
-        raise NotFoundError("The field date accepted is not present")
-    date = datetime.datetime.strptime(source["none"][0], "%Y-%m-%d")
-    return {"dateAccepted": date.strftime('%Y-%m-%d')}
+    field = source["field"]
+    if field.get("@name") == "value":
+        date = datetime.datetime.strptime(field.get("#text"), "%Y-%m-%d")
+        return {"dateAccepted": date.strftime('%Y-%m-%d')}
 
 
 @rule
