@@ -23,4 +23,4 @@ def get_map(identifier: str):
 
 if __name__ == "__main__":
     # pprint(get_map("oai:dspace.cuni.cz:20.500.11956/115773"))
-    pprint(get_source("thesis.grade", "oai:dspace.cuni.cz:20.500.11956/115864"))
+    pprint(get_source("dc.language.iso", "oai:dspace.cuni.cz:20.500.11956/115864"))

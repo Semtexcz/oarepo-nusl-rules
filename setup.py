@@ -9,7 +9,8 @@ from setuptools import find_packages, setup
 tests_require = [
     'pytest',
     'pytest-cov',
-    'sickle'
+    'sickle',
+    'flask'
 ]
 
 setup_requires = [

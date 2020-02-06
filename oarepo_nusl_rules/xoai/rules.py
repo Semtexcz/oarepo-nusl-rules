@@ -4,11 +4,8 @@ import datetime
 from urllib.parse import urlparse
 from collections import OrderedDict
 
-from langdetect import detect
-
 from oarepo_nusl_rules.decorators import rule
-from oarepo_nusl_rules.exceptions import NotFoundError
-from oarepo_nusl_rules.utils import get_iso_lang_code, extract_title
+from oarepo_nusl_rules.utils import extract_title, xoai_get_langs
 
 
 @rule
@@ -176,6 +173,10 @@ def xoai_defended(source, *args, **kwargs):
 
 @rule
 def xoai_identifier(source, *args, **kwargs):
+    """
+    CZ:
+    EN:
+    """
     handle = source["field"]["#text"]
     parsed_handle = urlparse(handle)
     oai_id = kwargs.get("identifier")
@@ -238,14 +239,26 @@ def xoai_identifier(source, *args, **kwargs):
 
 @rule
 def xoai_language(source, *args, **kwargs):
-    langs = []
-    for lang in source["none"]:
-        code = get_iso_lang_code(lang[:2])
-        if code is None:
-            raise NotFoundError(
-                f"The {lang} was not found in supported languages database. See pycountry.")
-        langs.append(code)
-    return {"language": langs}
+    """
+    CZ:
+    EN:
+    """
+    result = []
+    field = source["field"]
+    if isinstance(field, list):
+        for lang in field:
+            result.append(xoai_get_langs(lang))
+    else:
+        result.append(xoai_get_langs(field))
+    return {"language": result}
+
+    # for lang in source["none"]:
+    #     code = get_iso_lang_code(lang[:2])
+    #     if code is None:
+    #         raise NotFoundError(
+    #             f"The {lang} was not found in supported languages database. See pycountry.")
+    #     langs.append(code)
+    # return {"language": langs}
 
 
 @rule

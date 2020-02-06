@@ -1,8 +1,12 @@
 import re
+from collections import OrderedDict
 from functools import lru_cache
 
-from flask_taxonomies.utils import find_in_json, find_in_json_contains
+from flask_taxonomies.models import Taxonomy
+from flask_taxonomies.utils import find_in_json, find_in_json_contains, link_self
 from pycountry import languages
+
+from oarepo_nusl_rules.exceptions import NotFoundError
 
 
 def get_iso_lang_code(lang):
@@ -56,7 +60,8 @@ def psh_term_filter(psh_list_terms, keyword):
 
 
 # def studyfield_ref(study, tax, grantor, doc_type):
-#     # https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.JSON
+#     # https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql
+#     .JSON
 #     # https://github.com/sqlalchemy/sqlalchemy/issues/3859  # issuecomment-441935478
 #     fields = find_in_json(study, tax, tree_address=("title", 0, "value")).all()
 #     if len(fields) == 0:
@@ -134,3 +139,19 @@ def extract_title(dictionary, titles):
                     "lang": lang
                 }
             )
+
+
+def xoai_get_langs(field: OrderedDict) -> dict:
+    """
+    Function get data from field (XML source), extract lang abbreviation and return taxonomy link
+    :param field: It is field from xml_dict that contain information about language e.g:
+    ('field', OrderedDict([('@name', 'value'), ('#text', 'cs_CZ')]))
+    :return: Taxonomy reference with $ref
+    :rtype: Dict
+    """
+    lang_code = get_iso_lang_code(field["#text"][:2])
+    taxonomy = Taxonomy.get("languages")
+    term = taxonomy.get_term(lang_code)
+    if term is None:
+        raise NotFoundError(f"The language \"{lang_code}\" is not present in the Taxonomy")
+    return {'$ref': link_self(taxonomy.code, term)}
