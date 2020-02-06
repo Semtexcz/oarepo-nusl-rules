@@ -45,14 +45,25 @@ def xoai_contributor(source, *args, **kwargs):
     EN:
     """
     value = []
-    for k, v in source.items():
-        for person in v["none"]:
+    for person_role in source:
+        role = person_role["@name"]
+        field = person_role["element"]["field"]
+        if isinstance(field, list):
+            for person in field:
+                value.append(
+                    {
+                        "name": person["#text"],
+                        "role": role
+                    }
+                )
+        else:
             value.append(
                 {
-                    "name": person,
-                    "role": k
+                    "name": field["#text"],
+                    "role": role
                 }
             )
+
     return {
         "contributor": value
     }
