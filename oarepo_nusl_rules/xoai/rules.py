@@ -1,6 +1,7 @@
 import datetime
 
 # from flask_taxonomies.utils import find_in_json, find_in_json_contains
+from urllib.parse import urlparse
 from collections import OrderedDict
 
 from langdetect import detect
@@ -175,14 +176,20 @@ def xoai_defended(source, *args, **kwargs):
 
 @rule
 def xoai_identifier(source, *args, **kwargs):
+    handle = source["field"]["#text"]
+    parsed_handle = urlparse(handle)
+    oai_id = kwargs.get("identifier")
+    if oai_id is None:
+        oai_id = "oai:dspace.cuni.cz:" + parsed_handle.path.lstrip("/")
+
     return {
         "identifier": [
             {
-                "value": source,
+                "value": oai_id,
                 "type": "originalOAI"
             },
             {
-                "value": kwargs["metadata"]["dc"]["identifier"]["uri"]["none"][0],
+                "value": handle,
                 "type": "originalRecord"
             },
         ]
