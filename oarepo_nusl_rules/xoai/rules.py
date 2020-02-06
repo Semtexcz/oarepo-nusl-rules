@@ -76,11 +76,20 @@ def xoai_creator(source, *args, **kwargs):
     EN:
     """
     value = []
-    persons = source.get("none")
-    if persons is None:
-        raise NotFoundError("The creator field is not at the standard JSON address")
-    for person in persons:
-        value.append({"name": person})
+    field = source["field"]
+    if isinstance(field, list):
+        for person in field:
+            value.append(
+                {
+                    "name": person["#text"],
+                }
+            )
+    else:
+        value.append(
+            {
+                "name": field["#text"],
+            }
+        )
     return {"creator": value}
 
 
