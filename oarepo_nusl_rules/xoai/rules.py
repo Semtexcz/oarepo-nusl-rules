@@ -111,13 +111,25 @@ def xoai_defended(source, *args, **kwargs):
     CZ:
     EN:
     """
-    grade = source.get("cs").get("cs_CZ")
-    if grade is not None and grade:
-        grade = grade[0]
-        if grade.lower().strip() == "neprospěl":
-            return {"defended": False}
-        if grade.lower().strip() in ("výborně", "prospěl", "velmi dobře", "dobře"):
-            return {"defended": True}
+    for item in source:
+        lang = item["@name"]
+        field = item["element"]["field"]
+        if isinstance(field, OrderedDict):
+            if lang == "cs":
+                if field["#text"] == 'Prospěl/a':
+                    return {"defended": True}
+                else:
+                    return {"defended": False}
+            if lang == "en":
+                if field["#text"] == 'Pass':
+                    return {"defended": True}
+                else:
+                    return {"defended": False}
+            if lang == "code":
+                if field["#text"] == 'P':
+                    return {"defended": True}
+                else:
+                    return {"defended": False}
 
 
 # @rule
