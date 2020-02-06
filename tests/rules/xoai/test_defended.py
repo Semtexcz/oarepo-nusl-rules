@@ -5,8 +5,6 @@ from pytest import fixture
 from oarepo_nusl_rules.xoai.rules import xoai_defended
 
 
-# TODO: otestovat i neobhájené práce
-
 @fixture
 def defended():
     return [OrderedDict([('@name', 'cs'),
