@@ -1,14 +1,14 @@
 import datetime
 
 # from flask_taxonomies.utils import find_in_json, find_in_json_contains
+from collections import OrderedDict
+
 from langdetect import detect
 
 from oarepo_nusl_rules.decorators import rule
 from oarepo_nusl_rules.exceptions import NotFoundError
 from oarepo_nusl_rules.utils import get_iso_lang_code, extract_title
 
-
-# TODO: source by měl být celý json
 
 @rule
 def xoai_abstract(source, *args, **kwargs):
@@ -188,6 +188,7 @@ def xoai_identifier(source, *args, **kwargs):
         ]
     }
 
+
 #
 # @rule
 # def keywords(source, *args, **kwargs):
@@ -266,5 +267,3 @@ def xoai_title(source, *args, **kwargs):
     if "translated" in source:
         extract_title(source["translated"], titles)
     return {"title": titles}
-
-
