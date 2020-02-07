@@ -253,13 +253,12 @@ def xoai_language(source, *args, **kwargs):
     return {"language": result}
 
 
-
-@rule
-def xoai_modified(source, *args, **kwargs):
-    date_time_list = source.split(" ")
-    date = date_time_list[0]
-    time = date_time_list[1][:8]
-    return {"modified": f"{date}T{time}"}
+# @rule
+# def xoai_modified(source, *args, **kwargs):
+#     date_time_list = source.split(" ")
+#     date = date_time_list[0]
+#     time = date_time_list[1][:8]
+#     return {"modified": f"{date}T{time}"}
 
 
 # @rule
