@@ -274,8 +274,32 @@ def xoai_language(source, *args, **kwargs):
 
 @rule
 def xoai_title(source, *args, **kwargs):
-    titles = []
-    extract_title(source, titles)
-    if "translated" in source:
-        extract_title(source["translated"], titles)
-    return {"title": titles}
+    result = []
+    for item in source:
+        if item["@name"] == "translated":
+            if isinstance(item["element"], list):
+                for element in item["element"]:
+                    lang = get_iso_lang_code(element["@name"][:2])
+                    result.append(
+                        {
+                            "name": element["field"]["#text"],
+                            "lang": lang
+                        }
+                    )
+            else:
+                lang = get_iso_lang_code(item["element"]["@name"][:2])
+                result.append(
+                    {
+                        "name": item["element"]["field"]["#text"],
+                        "lang": lang
+                    }
+                )
+        else:
+            lang = get_iso_lang_code(item["@name"][:2])
+            result.append(
+                {
+                    "name": item["field"]["#text"],
+                    "lang": lang
+                }
+            )
+    return {"title": result}
