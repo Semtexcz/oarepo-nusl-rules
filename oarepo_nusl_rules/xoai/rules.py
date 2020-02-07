@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from collections import OrderedDict
 
 from oarepo_nusl_rules.decorators import rule
-from oarepo_nusl_rules.utils import extract_title, xoai_get_langs
+from oarepo_nusl_rules.utils import extract_title, xoai_get_langs, get_iso_lang_code
 
 
 @rule
@@ -247,18 +247,11 @@ def xoai_language(source, *args, **kwargs):
     field = source["field"]
     if isinstance(field, list):
         for lang in field:
-            result.append(xoai_get_langs(lang))
+            result.append(xoai_get_langs(lang["#text"]))
     else:
-        result.append(xoai_get_langs(field))
+        result.append(xoai_get_langs(field["#text"]))
     return {"language": result}
 
-    # for lang in source["none"]:
-    #     code = get_iso_lang_code(lang[:2])
-    #     if code is None:
-    #         raise NotFoundError(
-    #             f"The {lang} was not found in supported languages database. See pycountry.")
-    #     langs.append(code)
-    # return {"language": langs}
 
 
 @rule

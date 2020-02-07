@@ -141,15 +141,14 @@ def extract_title(dictionary, titles):
             )
 
 
-def xoai_get_langs(field: OrderedDict) -> dict:
+def xoai_get_langs(text: str) -> dict:
     """
     Function get data from field (XML source), extract lang abbreviation and return taxonomy link
-    :param field: It is field from xml_dict that contain information about language e.g:
-    ('field', OrderedDict([('@name', 'value'), ('#text', 'cs_CZ')]))
+    :param text: It is language string e.g.: cs_CZ or en_US
     :return: Taxonomy reference with $ref
     :rtype: Dict
     """
-    lang_code = get_iso_lang_code(field["#text"][:2])
+    lang_code = get_iso_lang_code(text[:2])
     taxonomy = Taxonomy.get("languages")
     term = taxonomy.get_term(lang_code)
     if term is None:
